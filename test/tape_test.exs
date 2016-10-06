@@ -7,7 +7,7 @@ defmodule TapeTest do
     assert Tape.read(tape) == nil
   end
 
-  test "read returns write" do
+  test "initial write" do
     tape = Tape.write(%Tape{}, 1)
     assert Tape.read(tape) == 1
   end
@@ -18,9 +18,14 @@ defmodule TapeTest do
   end
 
   test "read returns last write" do
-    tape = %Tape{ left: [1, 2, 3] }
-    assert Tape.read(tape) == 1
+    tape = Tape.write(%Tape{}, 1) |> Tape.write(2)
+    assert Tape.read(tape) == 2
   end
+
+  test "erase" do
+    tape = Tape.write(%Tape{}, 1) |> Tape.erase
+    assert Tape.read(tape) == nil
+  end    
 
   test "move left when at left end" do
     t = Tape.move_left(%Tape{})

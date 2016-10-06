@@ -13,6 +13,10 @@ defmodule Tape do
     %{tape | left: List.replace_at(tape.left, 0, elem)}
   end
 
+  def erase(tape) do
+    Tape.write(tape, nil)
+  end
+
   def move_left(%Tape{ left: [], right: right }) do
     %Tape{right: [nil | right]}
   end
