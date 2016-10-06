@@ -1,5 +1,3 @@
-#require IEx;
-
 defmodule Tape do
   defstruct left: [], right: []
 
@@ -7,19 +5,31 @@ defmodule Tape do
     List.first(tape.left)
   end
 
+  def write(%Tape{ left: [], right: right }, elem) do
+    %Tape{ left: [elem], right: right }
+  end
+
   def write(tape, elem) do
-    %{tape | left: [elem | tape.left]}
+    %{tape | left: List.replace_at(tape.left, 0, elem)}
+  end
+
+  def move_left(%Tape{ left: [], right: right }) do
+    %Tape{right: [nil | right]}
   end
 
   def move_left(tape) do
     [elem | rest] = tape.left
-    tape = %{tape | right: rest}
-    %{tape | left: [elem | tape.left]}
+    %Tape{ left: rest,
+           right: [elem | tape.right] }
+  end
+
+  def move_right(%Tape{ left: left, right: [] }) do
+    %Tape{left: [nil | left]}
   end
 
   def move_right(tape) do
     [elem | rest] = tape.right
-    tape = %{tape | left: rest}
-    %{tape | right: [elem | tape.right]}
+    %Tape{ left: [elem | tape.left],
+           right: rest }
   end
 end
