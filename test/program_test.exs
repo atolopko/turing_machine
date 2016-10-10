@@ -19,6 +19,15 @@ defmodule ProgramTest do
     assert Program.find(p, :s2, 3) == {[:erase, :right], :s3}
   end
 
+  test "find :any_symbol input (special-case)" do
+    p = Program.add(:s0, :any_symbol, [:right], :halt)
+    assert Program.find(p, :s0, 1) == {[:right], :halt}
+    assert Program.find(p, :s0, 2) == {[:right], :halt}
+    assert_raise ProgramError, "undefined input nil for state :s0", fn ->
+      Program.find(p, :s0, nil)
+    end
+  end
+
   test "execute program with ummatched program state" do
     p = Program.add(:initial, nil, [], :halt)
     assert_raise ProgramError, "undefined state :missing", fn ->

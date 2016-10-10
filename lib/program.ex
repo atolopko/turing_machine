@@ -10,9 +10,15 @@ defmodule Program do
 
   def find(prog, state, input) do
     unless Map.has_key?(prog, state),
-      do: raise(ProgramError, "undefined state #{inspect state}") 
+      do: raise(ProgramError, "undefined state #{inspect state}")
+
+    if input != nil && Map.has_key?(prog[state], :any_symbol) do
+      input = :any_symbol
+    end
+      
     unless Map.has_key?(prog[state], input),
       do: raise(ProgramError, "undefined input #{inspect input} for state #{inspect state}") 
+
     prog[state][input]
   end
 end
