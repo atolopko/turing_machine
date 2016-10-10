@@ -1,22 +1,26 @@
 defmodule Program do
+  import Map
+  
   def add(prog \\ %{}, from_state, input, operations, to_state) do
     x = { operations, to_state }
-    Map.update(
+    update(
       prog,
       from_state,
       %{ input => x },
-      fn(v) -> Map.put(v, input, x) end)
+      fn(v) -> put(v, input, x) end)
   end
 
   def find(prog, state, input) do
-    unless Map.has_key?(prog, state),
+    unless has_key?(prog, state),
       do: raise(ProgramError, "undefined state #{inspect state}")
 
-    if input != nil && Map.has_key?(prog[state], :any_symbol) do
-      input = :any_symbol
+    input = if input != nil && has_key?(prog[state], :any_symbol) do
+      :any_symbol
+    else
+      input
     end
       
-    unless Map.has_key?(prog[state], input),
+    unless has_key?(prog[state], input),
       do: raise(ProgramError, "undefined input #{inspect input} for state #{inspect state}") 
 
     prog[state][input]

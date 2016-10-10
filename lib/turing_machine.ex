@@ -2,7 +2,7 @@ defmodule TuringMachine do
   defstruct state: :initial, tape: %Tape{}
 
   def execute(program) do
-    TuringMachine.execute(
+    execute(
       %TuringMachine{},
       program)
   end

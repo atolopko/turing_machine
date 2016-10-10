@@ -15,13 +15,19 @@ defmodule TuringMachineTest do
   end
 
   test "execute left op" do
-    tape = Tape.write(%Tape{}, 1) |> Tape.move_right |> Tape.write(2)
+    tape =
+      Tape.write(%Tape{}, 1) |>
+      Tape.move_right |>
+      Tape.write(2)
     tape = TuringMachine.execute_ops([:left], tape)
     assert Tape.read(tape) == 1
   end
 
   test "execute right op" do
-    tape = Tape.write(%Tape{}, 1) |> Tape.move_left |> Tape.write(2)
+    tape =
+      Tape.write(%Tape{}, 1) |>
+      Tape.move_left |>
+      Tape.write(2)
     tape = TuringMachine.execute_ops([:right], tape)
     assert Tape.read(tape) == 1
   end
@@ -41,7 +47,8 @@ defmodule TuringMachineTest do
   end
 
   test "execute simple program" do
-    p = Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
+    p =
+      Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
       Program.add(:s1, nil, [], :halt)
     IO.inspect p
     tm = TuringMachine.execute(p)
@@ -49,7 +56,8 @@ defmodule TuringMachineTest do
   end
 
   test "execute multi-step program" do
-    p = Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
+    p =
+      Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
       Program.add(:s1, nil, [{:write, 2}, :left], :s1) |>
       Program.add(:s1, 1, [], :halt)
     tm = TuringMachine.execute(p)
