@@ -43,6 +43,7 @@ defimpl Inspect, for: Tape do
     left_str =
       case tape.left do
         [] -> "[... <#{inspect nil}>"
+        [current | []] -> "[... <#{inspect current}>"
         [current | left] -> "[... #{Enum.join(Enum.reverse(left), " ")} <#{inspect current}>"
       end
     right_str =

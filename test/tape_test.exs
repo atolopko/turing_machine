@@ -14,6 +14,12 @@ defmodule TapeTest do
     assert(inspect(t) == "[... 1 <2> 3 4 ...]")
   end
 
+  test "inspect with 1-element left" do
+    t = %Tape{ left: [1],
+               right: [3, 4] }
+    assert(inspect(t) == "[... <1> 3 4 ...]")
+  end
+
   test "inspect with empty left" do
     t = %Tape{ left: [],
                right: [3, 4] }
