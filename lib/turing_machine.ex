@@ -1,5 +1,11 @@
 defmodule TuringMachine do
-  defstruct state: nil, tape: %Tape{}
+  defstruct state: :initial, tape: %Tape{}
+
+  def execute(program) do
+    TuringMachine.execute(
+      %TuringMachine{},
+      program)
+  end
 
   def execute(%{ state: :halt, tape: tape}, program) do
     %TuringMachine{ state: :halt, tape: tape }
@@ -7,10 +13,9 @@ defmodule TuringMachine do
 
   def execute(tm, program) do
     { operations, to_state } =
-      Program.find(program, tm.state, tm.tape.read)
-    tape = execute(operations, tm.tape)
-    tm = %TuringMachine{ state: to_state,
-                         tape: tape }
+      Program.find(program, tm.state, Tape.read(tm.tape))
+    tape = execute_ops(operations, tm.tape)
+    tm = %TuringMachine{ state: to_state, tape: tape }
     execute(tm, program)
   end
 

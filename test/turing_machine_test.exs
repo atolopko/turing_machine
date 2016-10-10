@@ -1,3 +1,4 @@
+# Note: TurningMachineTest is not to be confused with TuringTest! ;-)
 defmodule TuringMachineTest do
   use ExUnit.Case
   doctest TuringMachine
@@ -37,5 +38,28 @@ defmodule TuringMachineTest do
     assert Tape.read(tape) == 1
     tape = Tape.move_left(tape)
     assert Tape.read(tape) == 2
+  end
+
+  test "execute simple program" do
+    p = Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
+      Program.add(:s1, nil, [], :halt)
+    IO.inspect p
+    tm = TuringMachine.execute(p)
+    assert tm.state == :halt
+  end
+
+  test "execute multi-step program" do
+    p = Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
+      Program.add(:s1, nil, [{:write, 2}, :left], :s1) |>
+      Program.add(:s1, 1, [], :halt)
+    tm = TuringMachine.execute(p)
+    assert tm.state == :halt
+  end
+
+  test "execute invalid program" do
+    p = Program.add(:s1, 1, [:left], :halt)
+    assert_raise ProgramError, fn ->
+      TuringMachine.execute(p)
+    end
   end
 end
