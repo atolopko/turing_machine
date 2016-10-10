@@ -2,6 +2,30 @@ defmodule TapeTest do
   use ExUnit.Case
   doctest Tape
 
+  test "inspect with empty left and right" do
+    t = %Tape{ left: [],
+               right: [] }
+    assert(inspect(t) == "[... <nil> ...]")
+  end
+
+  test "inspect with non-empty left and right" do
+    t = %Tape{ left: [2, 1],
+               right: [3, 4] }
+    assert(inspect(t) == "[... 1 <2> 3 4 ...]")
+  end
+
+  test "inspect with empty left" do
+    t = %Tape{ left: [],
+               right: [3, 4] }
+    assert(inspect(t) == "[... <nil> 3 4 ...]")
+  end
+
+  test "inspect with empty right" do
+    t = %Tape{ left: [2, 1],
+               right: [] }
+    assert(inspect(t) == "[... 1 <2> ...]")
+  end
+
   test "initial read" do
     tape = %Tape{}
     assert Tape.read(tape) == nil

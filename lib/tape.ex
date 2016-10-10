@@ -37,3 +37,19 @@ defmodule Tape do
            right: rest }
   end
 end
+
+defimpl Inspect, for: Tape do
+  def inspect(tape, opts) do
+    left_str =
+      case tape.left do
+        [] -> "[... <#{inspect nil}>"
+        [current | left] -> "[... #{Enum.join(Enum.reverse(left), " ")} <#{inspect current}>"
+      end
+    right_str =
+      case tape.right do
+        [] -> "...]"
+        right -> "#{Enum.join(right, " ")} ...]"
+      end
+    "#{left_str} #{right_str}"
+  end
+end
