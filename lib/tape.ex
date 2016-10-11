@@ -39,7 +39,7 @@ defmodule Tape do
 end
 
 defimpl Inspect, for: Tape do
-  def inspect(tape, opts) do
+  def inspect(tape, _) do
     left_str =
       case tape.left do
         [] -> "[... <#{inspect nil}>"
