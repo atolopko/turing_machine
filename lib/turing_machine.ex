@@ -23,30 +23,26 @@ defmodule TuringMachine do
 
   defp trace(tape) do
     Logger.debug(inspect tape)
+    tape
   end
 
   defp execute_ops([], tape) do
     trace tape
-    tape
   end
 
   defp execute_ops([:left | operations], tape) do
-    trace tape
-    execute_ops(operations, Tape.move_left(tape))
+    trace execute_ops(operations, Tape.move_left(tape))
   end
 
   defp execute_ops([:right | operations], tape) do
-    trace tape
-    execute_ops(operations, Tape.move_right(tape))
+    trace execute_ops(operations, Tape.move_right(tape))
   end
   
   defp execute_ops([:erase | operations], tape) do
-    trace tape
-    execute_ops(operations, Tape.erase(tape))
+    trace execute_ops(operations, Tape.erase(tape))
   end
   
   defp execute_ops([{ :write, symbol } | operations], tape) do
-    trace tape
-    execute_ops(operations, Tape.write(tape, symbol))
+    trace execute_ops(operations, Tape.write(tape, symbol))
   end
 end
