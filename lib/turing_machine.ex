@@ -19,28 +19,32 @@ defmodule TuringMachine do
     execute(tm, program)
   end
 
-  def execute_ops([], tape) do
-    IO.inspect tape
+  defp trace(tape) do
+    IO.inspect tape    
+  end
+
+  defp execute_ops([], tape) do
+    trace tape
     tape
   end
 
-  def execute_ops([:left | operations], tape) do
-    IO.inspect tape
+  defp execute_ops([:left | operations], tape) do
+    trace tape
     execute_ops(operations, Tape.move_left(tape))
   end
 
-  def execute_ops([:right | operations], tape) do
-    IO.inspect tape
+  defp execute_ops([:right | operations], tape) do
+    trace tape
     execute_ops(operations, Tape.move_right(tape))
   end
   
-  def execute_ops([:erase | operations], tape) do
-    IO.inspect tape
+  defp execute_ops([:erase | operations], tape) do
+    trace tape
     execute_ops(operations, Tape.erase(tape))
   end
   
-  def execute_ops([{ :write, symbol } | operations], tape) do
-    IO.inspect tape
+  defp execute_ops([{ :write, symbol } | operations], tape) do
+    trace tape
     execute_ops(operations, Tape.write(tape, symbol))
   end
 end
