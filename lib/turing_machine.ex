@@ -1,4 +1,6 @@
 defmodule TuringMachine do
+  require Logger
+
   defstruct state: :initial, tape: %Tape{}
 
   def execute(program) do
@@ -20,7 +22,7 @@ defmodule TuringMachine do
   end
 
   defp trace(tape) do
-    IO.inspect tape    
+    Logger.debug(inspect tape)
   end
 
   defp execute_ops([], tape) do
