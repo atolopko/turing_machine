@@ -19,8 +19,15 @@ use Mix.Config
 # Or configure a 3rd-party app:
 #
 config :logger,
-  level: :warn,
-  backends: [:console]
+  backends: [:console,
+             {LoggerFileBackend, :debug_log}]
+
+config :logger, :console,
+  level: :warn
+
+config :logger, :debug_log,
+  path: "log/app.log",
+  level: :debug
 
 
 # It is also possible to import configuration files, relative to this
