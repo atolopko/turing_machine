@@ -3,16 +3,6 @@ defmodule TuringMachineTest do
   use ExUnit.Case
   doctest TuringMachine
 
-  test "execute simple program" do
-    p =
-      Program.add(:initial, nil, [{:write, 1}, :right], :s1) |>
-      Program.add(:s1, nil, [], :halt)
-    IO.inspect p
-    tm = TuringMachine.execute(p)
-    assert tm.state == :halt
-    assert inspect(tm.tape) == "[... 1 <nil> ...]"
-  end
-
   test "execute write op" do
     p = Program.add(:initial, nil, [{:write, 1}], :halt)
     tape = TuringMachine.execute(p).tape
@@ -66,6 +56,7 @@ defmodule TuringMachineTest do
       Program.add(:s1, 1, [], :halt)
     tm = TuringMachine.execute(p)
     assert tm.state == :halt
+    assert inspect(tm.tape) == "[... <1> 2 ...]"
   end
 
   test "execute invalid program" do
