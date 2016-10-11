@@ -11,8 +11,8 @@ defmodule TuringMachineTest do
 
   test "execute erase op" do
     tape = Tape.write(%Tape{}, 1)
-    p = Program.add(:initial, nil, [:erase], :halt)
-    tape = TuringMachine.execute(p).tape
+    p = Program.add(:initial, 1, [:erase], :halt)
+    tape = TuringMachine.execute(%TuringMachine{ tape: tape }, p).tape
     assert Tape.read(tape) == nil
   end
 

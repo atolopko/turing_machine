@@ -9,7 +9,7 @@ defmodule TuringMachine do
       program)
   end
 
-  def execute(%{ state: :halt, tape: tape}, program) do
+  def execute(%{ state: :halt, tape: tape}, _) do
     %TuringMachine{ state: :halt, tape: tape }
   end
 
