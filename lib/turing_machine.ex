@@ -18,6 +18,7 @@ defmodule TuringMachine do
       Program.find(program, tm.state, Tape.read(tm.tape))
     tape = execute_ops(operations, tm.tape)
     tm = %TuringMachine{ state: to_state, tape: tape }
+    Logger.info "state=#{tm.state} #{inspect tm.tape}"
     execute(tm, program)
   end
 

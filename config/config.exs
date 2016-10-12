@@ -23,7 +23,7 @@ config :logger,
              {LoggerFileBackend, :debug_log}]
 
 config :logger, :console,
-  level: :warn
+  level: :info
 
 config :logger, :debug_log,
   path: "log/app.log",
